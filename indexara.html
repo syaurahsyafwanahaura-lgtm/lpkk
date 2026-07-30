@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Layanan Jenis LPK Pekanbaru</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&family=Inter:wght@400;500;600&display=swap"
+        rel="stylesheet">
+
+    <style>
+        :root {
+            --biru-tua: #0a3d62;
+            --biru-navbar: #cfeaf7;
+            --kuning: #ffc93c;
+            --gold: #e0b73b;
+            --foam: #eaf6fb;
+            --muted: #8fb3c9;
+            --font-judul: 'Poppins', sans-serif;
+            --font-body: 'Inter', sans-serif;
+        }
+
+        body {
+            background: var(--foam);
+            font-family: var(--font-body);
+        }
+
+        h1,
+        h2,
+        .navbar-brand {
+            font-family: var(--font-judul);
+        }
+
+        /* ===== NAVBAR ===== */
+        .navbar-kkp {
+            background: var(--biru-navbar) !important;
+            padding-top: 6px;
+            padding-bottom: 6px;
+            overflow: visible;
+            position: relative;
+            z-index: 10;
+        }
+
+        .navbar-kkp .navbar-brand img {
+            height: 90px;
+            width: auto;
+            margin: -20px 0;
+            /* logo nongol lebih besar dari bar, tapi ga ikut narik tinggi navbar */
+        }
+
+        .navbar-kkp .navbar-brand {
+            font-weight: 700;
+            font-size: 13px;
+            color: var(--biru-tua);
+            line-height: 1.3;
+        }
+
+        .navbar-kkp .nav-link {
+            color: var(--biru-tua) !important;
+            font-weight: 600;
+        }
+
+        .navbar-kkp .nav-link.active {
+            text-decoration: underline;
+        }
+
+        .navbar-kkp .navbar-toggler {
+            border-color: var(--biru-tua);
+        }
+
+        .navbar-kkp .navbar-toggler-icon {
+            background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3E%3Cpath stroke='rgb%2810,61,98%29' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
+        }
+
+        /* ===== HERO ===== */
+        .hero {
+            position: relative;
+            border-radius: 26px;
+            padding: 60px 45px;
+            color: white;
+            overflow: hidden;
+            background:
+                linear-gradient(rgba(20, 90, 130, .55), rgba(15, 70, 105, .6)),
+                url('laut1.jpg') center/cover;
+            min-height: 260px;
+        }
+
+        .hero h1 {
+            font-weight: 700;
+            font-size: clamp(28px, 4.5vw, 44px);
+            line-height: 1.15;
+            max-width: 560px;
+        }
+
+        .btn-filter {
+            background: var(--kuning);
+            color: var(--biru-tua);
+            border: none;
+            border-radius: 30px;
+            padding: 12px 26px;
+            font-weight: 700;
+            box-shadow: 0 8px 20px -6px rgba(255, 201, 60, .6);
+        }
+
+        .btn-filter:hover {
+            color: var(--biru-tua);
+            filter: brightness(1.05);
+        }
+
+        .waves-deco {
+            position: absolute;
+            right: 20px;
+            top: 0;
+            bottom: 0;
+            display: flex;
+            align-items: center;
+            opacity: .85;
+        }
+
+        .waves-deco svg {
+            width: 160px;
+        }
+
+        @media (max-width:700px) {
+            .waves-deco {
+                display: none;
+            }
+        }
+
+        /* ===== SECTION UMUM ===== */
+        .section-head h2 {
+            color: var(--biru-tua);
+            font-weight: 700;
+        }
+
+        .section-head p {
+            color: #5a7a8c;
+            font-size: 14px;
+        }
+
+        /* ===== MEDIA SOSIAL ===== */
+        .sosial-card {
+            position: relative;
+            border: none;
+            border-radius: 20px;
+            background: var(--card-bg, #fff);
+            color: var(--card-teks, #333);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, .06);
+        }
+
+        .sosial-card .card-body {
+            padding: 18px 20px;
+        }
+
+        .sosial-card .icon-badge {
+            font-size: 22px;
+        }
+
+        .sosial-card .status {
+            font-size: 11.5px;
+            opacity: .8;
+        }
+
+        .sosial-card a.stretched-link {
+            border-radius: inherit;
+        }
+
+        .kartu-preview {
+            position: absolute;
+            top: calc(100% + 8px);
+            left: 0;
+            right: 0;
+            background: white;
+            color: #222;
+            border-radius: 14px;
+            padding: 16px 18px;
+            box-shadow: 0 14px 30px -8px rgba(0, 0, 0, .2);
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(6px);
+            transition: .25s ease;
+            z-index: 20;
+            pointer-events: none;
+        }
+
+        .sosial-card:hover .kartu-preview {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+            pointer-events: auto;
+        }
+
+        .kartu-preview .garis {
+            width: 28px;
+            height: 3px;
+            border-radius: 2px;
+            background: var(--card-teks, #333);
+            margin-bottom: 10px;
+        }
+
+        .kartu-preview .lihat {
+            color: var(--card-teks, #333);
+            font-weight: 700;
+            font-size: 12.5px;
+        }
+
+        .pill-instagram {
+            --card-bg: linear-gradient(120deg, #f9c9d9, #fbe9ec);
+            --card-teks: #c0296b;
+        }
+
+        .pill-facebook {
+            --card-bg: linear-gradient(120deg, #cfeaf7, #e5f4fb);
+            --card-teks: #1877f2;
+        }
+
+        .pill-tiktok {
+            --card-bg: linear-gradient(120deg, #2b2b2b, #5c5c5c);
+            --card-teks: #fff;
+        }
+
+        .pill-youtube {
+            --card-bg: linear-gradient(120deg, #ffbcbc, #ffdada);
+            --card-teks: #d80000;
+        }
+
+        /* ===== INTEGRASI DATA (accordion Bootstrap, tema gelap + emas) ===== */
+        .integrasi-wrap {
+            position: relative;
+            overflow: hidden;
+            border-radius: 26px;
+            padding: 44px 30px 50px;
+            background:
+                linear-gradient(rgba(8, 20, 32, .82), rgba(8, 20, 32, .9)),
+                url('laut2.jpg') center/cover fixed;
+        }
+
+        .integrasi-wrap .coral-deco {
+            position: absolute;
+            top: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: min(480px, 60vw);
+            opacity: .18;
+            pointer-events: none;
+        }
+
+        .integrasi-wrap .section-head h2 {
+            color: var(--gold);
+            position: relative;
+            z-index: 1;
+        }
+
+        .integrasi-wrap .section-head p {
+            color: var(--muted);
+            position: relative;
+            z-index: 1;
+        }
+
+        .accordion-item {
+            position: relative;
+            z-index: 1;
+            background: rgba(30, 30, 35, .85) !important;
+            border: 1px solid rgba(224, 183, 59, .35) !important;
+            border-radius: 16px !important;
+            overflow: hidden;
+            margin-bottom: 14px;
+        }
+
+        .accordion-button {
+            background: transparent !important;
+            color: var(--gold) !important;
+            font-weight: 700;
+            box-shadow: none !important;
+        }
+
+        .accordion-button::after {
+            filter: invert(72%) sepia(56%) saturate(429%) hue-rotate(1deg) brightness(96%);
+        }
+
+        .accordion-button .jumlah-badge {
+            font-size: 11px;
+            font-weight: 500;
+            color: var(--muted);
+            margin-left: 10px;
+        }
+
+        .accordion-body {
+            padding: 0;
+        }
+
+        .daftar-menu a {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 20px;
+            color: var(--muted);
+            font-size: 13.5px;
+            text-decoration: none;
+            border-top: 1px solid rgba(255, 255, 255, .06);
+            transition: .2s;
+        }
+
+        .daftar-menu a:hover {
+            color: var(--foam);
+            background: rgba(224, 183, 59, .08);
+        }
+
+        /* ===== RUNNING TEXT ===== */
+        .marquee-bar {
+            background: var(--biru-tua);
+            padding: 12px 0;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+
+        .marquee-track {
+            display: inline-flex;
+            align-items: center;
+            animation: geser 22s linear infinite;
+        }
+
+        .marquee-track span {
+            font-weight: 600;
+            color: var(--kuning);
+            padding: 0 24px;
+            font-size: 14px;
+        }
+
+        @keyframes geser {
+            from {
+                transform: translateX(0);
+            }
+
+            to {
+                transform: translateX(-50%);
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-kkp sticky-top">
+        <div class="container-fluid px-4">
+            <a class="navbar-brand d-flex align-items-center" href="#beranda">
+                <img src="logo-kkp.png" height="44" alt="Kementerian Kelautan dan Perikanan">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navKKP">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-end" id="navKKP">
+                <ul class="navbar-nav gap-lg-4">
+                    <li class="nav-item"><a class="nav-link" href="#beranda">Beranda</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#media-sosial">Media Sosial</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#integrasi-data">Integrasi Data</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container-fluid p-3">
+
+        <section class="hero mb-4" id="beranda">
+            <h1>Layanan Jenis LPK<br>Pekanbaru</h1>
+            <a class="btn btn-filter mt-2" id="linkFilterData" href="#"><i class="bi bi-search me-1"></i> Filter
+                Data</a>
+            <div class="waves-deco">
+                <svg viewBox="0 0 200 260" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M0 40 Q 25 10 50 40 T 100 40 T 150 40 T 200 40" stroke="white" stroke-width="10"
+                        stroke-linecap="round" />
+                    <path d="M0 120 Q 25 90 50 120 T 100 120 T 150 120 T 200 120" stroke="white" stroke-width="10"
+                        stroke-linecap="round" />
+                    <path d="M0 200 Q 25 170 50 200 T 100 200 T 150 200 T 200 200" stroke="white" stroke-width="10"
+                        stroke-linecap="round" />
+                </svg>
+            </div>
+        </section>
+
+        <section class="container py-4" id="media-sosial">
+            <div class="section-head mb-4">
+                <h2>Media Sosial</h2>
+            </div>
+            <div class="row g-3" id="wrapSosial"></div>
+        </section>
+
+        <div class="integrasi-wrap mt-3" id="integrasi-data">
+            <div class="section-head mb-4">
+                <h2>Integrasi Data</h2>
+             </div>
+            <div class="accordion position-relative" id="accordionIntegrasi" style="z-index:1;"></div>
+        </div>
+
+    </div>
+
+    <div class="marquee-bar mt-4">
+        <div class="marquee-track" id="marqueeTrack"></div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+       
+
+        const LINK_FILTER_DATA = '#';
+
+        const SOSIAL_MEDIA = {
+            instagram: {
+                label: 'Instagram', url: 'https://www.instagram.com/12rpl_2_?igsh=ejVwcjd3YWJrajNq', kelas: 'pill-instagram', ikon: 'bi-instagram',
+                judul: 'Postingan Terbaru', keterangan: 'Kegiatan & dokumentasi terbaru LPK Pekanbaru.', waktu: 'Baru saja diunggah'
+            },
+            facebook: {
+                label: 'Facebook', url: 'https://facebook.com/GANTI_NAMA_HALAMAN_FB', kelas: 'pill-facebook', ikon: 'bi-facebook',
+                judul: 'Postingan Terbaru', keterangan: 'Berita & informasi resmi terbaru.', waktu: 'Update terbaru'
+            },
+            tiktok: {
+                label: 'TikTok', url: 'https://tiktok.com/@GANTI_USERNAME_TIKTOK', kelas: 'pill-tiktok', ikon: 'bi-tiktok',
+                judul: 'Video Terbaru', keterangan: 'Konten edukasi kelautan dalam video singkat.', waktu: 'Video terbaru'
+            },
+            youtube: {
+                label: 'YouTube', url: 'https://youtube.com/GANTI_CHANNEL_YT', kelas: 'pill-youtube', ikon: 'bi-youtube',
+                judul: 'Video Terbaru', keterangan: 'Dokumentasi kegiatan & edukasi lengkap.', waktu: 'Video terbaru'
+            }
+        };
+
+        const INTEGRASI_DATA = {
+            perlindungan: {
+                label: 'Perlindungan &amp; Pelestarian', ikon: 'bi-tree',
+                items: {
+                    'ResPat BUAYA': 'GANTI_LINK_RESPAT_BUAYA',
+                    'LokaBeOn': 'GANTI_LINK_LOKABEON',
+                    'Anambas Dalam Data': 'GANTI_LINK_ANAMBAS_DALAM_DATA',
+                    'Pieh Dalam Data': 'GANTI_LINK_PIEH_DALAM_DATA',
+                    'Landing Page KK Anambas': 'GANTI_LINK_LANDING_KK_ANAMBAS',
+                    'Landing Page KK Pieh': 'GANTI_LINK_LANDING_KK_PIEH'
+                }
+            },
+            pemanfaatan: {
+                label: 'Pemanfaatan &amp; Jenis Ikan', ikon: 'bi-water',
+                items: {
+                    'Kawasan Konservasi': 'GANTI_LINK_KAWASAN_KONSERVASI',
+                    'Jenis Ikan': 'GANTI_LINK_JENIS_IKAN',
+                    'Pelayanan LPK Pekanbaru': 'GANTI_LINK_LAYANAN_LPK',
+                    'PNBP': 'GANTI_LINK_PNBP',
+                    'SeaPark': 'GANTI_LINK_SEAPARK',
+                    'eSAJI': 'GANTI_LINK_ESAJI',
+                    'eSultan 2.0': 'GANTI_LINK_ESULTAN',
+                    'SOP Pelayanan': 'GANTI_LINK_SOP_PELAYANAN'
+                }
+            },
+            dukman: {
+                label: 'Dukman (Dukungan Manajemen)', ikon: 'bi-briefcase',
+                items: {
+                    'Sipintar': 'GANTI_LINK_SIPINTAR',
+                    'PPID LPK': 'GANTI_LINK_PPID',
+                    'SIPPN': 'GANTI_LINK_SIPPN',
+                    'Koordinasi Instansi': 'GANTI_LINK_KOORDINASI',
+                    'Sistem Pelaporan': 'GANTI_LINK_SISTEM_PELAPORAN',
+                    'Emergency Response': 'GANTI_LINK_EMERGENCY'
+                }
+            }
+        };
+
+        const TEKS_MARQUEE = 'Selamat Datang di Layanan Jenis LPK Pekanbaru';
+
+
+        document.getElementById('linkFilterData').href = LINK_FILTER_DATA;
+
+        const wrapSosial = document.getElementById('wrapSosial');
+        Object.keys(SOSIAL_MEDIA).forEach(function (key) {
+            const sm = SOSIAL_MEDIA[key];
+            const kol = document.createElement('div');
+            kol.className = 'col-6 col-md-3';
+            kol.innerHTML = `
+    <div class="card sosial-card ${sm.kelas}">
+      <div class="card-body">
+        <a class="stretched-link" href="${sm.url}" target="_blank" rel="noopener" aria-label="${sm.label}"></a>
+        <div class="d-flex justify-content-between align-items-center">
+          <span class="fw-bold"><i class="bi ${sm.ikon} icon-badge me-1"></i> ${sm.label}</span>
+        </div>
+        <div class="status mt-1"><i class="bi bi-circle-fill" style="font-size:6px;"></i> ${sm.waktu}</div>
+        <div class="kartu-preview">
+          <div class="garis"></div>
+          <p class="fw-bold mb-1" style="font-size:14px;">${sm.judul}</p>
+          <p class="mb-2" style="font-size:12.5px; color:#666;">${sm.keterangan}</p>
+          <a class="lihat" href="${sm.url}" target="_blank" rel="noopener">Lihat di ${sm.label} <i class="bi bi-arrow-right"></i></a>
+        </div>
+      </div>
+    </div>
+  `;
+            wrapSosial.appendChild(kol);
+        });
+
+        const accordionWrap = document.getElementById('accordionIntegrasi');
+        Object.keys(INTEGRASI_DATA).forEach(function (key, idx) {
+            const grup = INTEGRASI_DATA[key];
+            const jumlah = Object.keys(grup.items).length;
+
+            let daftar = '';
+            Object.keys(grup.items).forEach(function (nama) {
+                daftar += `<a href="${grup.items[nama]}" target="_blank" rel="noopener">${nama} <i class="bi bi-box-arrow-up-right"></i></a>`;
+            });
+
+            const item = document.createElement('div');
+            item.className = 'accordion-item';
+            item.innerHTML = `
+    <h2 class="accordion-header">
+      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-${key}">
+        <i class="bi ${grup.ikon} me-2"></i> ${grup.label}
+        <span class="jumlah-badge">${jumlah} LAYANAN</span>
+      </button>
+    </h2>
+    <div id="collapse-${key}" class="accordion-collapse collapse" data-bs-parent="#accordionIntegrasi">
+      <div class="accordion-body daftar-menu">${daftar}</div>
+    </div>
+  `;
+            accordionWrap.appendChild(item);
+        });
+
+        const marqueeTrack = document.getElementById('marqueeTrack');
+        let potongan = '';
+        for (let i = 0; i < 10; i++) { potongan += `<span>${TEKS_MARQUEE}</span>`; }
+        marqueeTrack.innerHTML = potongan + potongan;
+    </script>
+
+</body>
+
+</html>
